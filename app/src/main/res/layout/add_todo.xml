@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/checkbox_rem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="wrap_content"
+                android:layout_height="78dp"
+                android:layout_weight="1"
+                android:inputType="textPersonName"
+                android:hint="Add ToDo's" />
+
+            <ImageView
+                android:id="@+id/star"
+                android:layout_width="35dp"
+                android:layout_height="45dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/marked_star" />
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:paddingTop="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/rem" />
+
+            <TextView
+               android:layout_weight="1"
+               android:layout_width="0dp"
+               android:text="Set Reminder"
+               android:padding="7dp"
+               android:textSize="20dp"
+               android:layout_height="wrap_content"/>
+            <CheckBox
+                android:id="@+id/setTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
+
+   <LinearLayout
+       android:id="@+id/showtimer"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       >
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:layout_height="wrap_content"
+           android:padding="10dp"
+           android:orientation="horizontal">
+           <ImageView
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:src="@drawable/calender" />
+           <EditText
+               android:id="@+id/date"
+               android:layout_width="match_parent"
+               android:padding="7dp"
+               android:hint="Add Date"
+               android:layout_height="wrap_content"
+               />
+       </LinearLayout>
+
+
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:padding="10dp"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+
+           <ImageView
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:src="@drawable/timer_icon" />
+
+           <EditText
+               android:id="@+id/time"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="7dp"
+               android:hint="Add Time" />
+       </LinearLayout>
+   </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="ADD TASK"
+        android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>
