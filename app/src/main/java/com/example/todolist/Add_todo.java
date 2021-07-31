@@ -1,10 +1,13 @@
 package com.example.todolist;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.LoaderManager;
 import android.app.TimePickerDialog;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import com.example.todolist.data.ListContract;
 import com.example.todolist.data.ListDbHelper;
@@ -73,6 +77,7 @@ public class Add_todo extends AppCompatActivity implements LoaderManager.LoaderC
          @Override
          public void onClick(View v) {
              insert();
+             finish();
          }
      });
 setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -208,11 +213,43 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         switch (item.getItemId())
         {
             case R.id.delete:
-
+                showDeleteConfirmationDialog();
                 return true;
 
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the postivie and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Delete");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the pet.
+                delete();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    private void delete() {
+        if (List_Uri != null) {
+            getContentResolver().delete(List_Uri, null, null);
+        }
+        finish();
+
     }
 
 
@@ -259,4 +296,6 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         date_text.setText(" ");
         time_text.setText(" ");
     }
+
+
 }

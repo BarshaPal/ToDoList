@@ -36,12 +36,7 @@
                     android:inputType="textPersonName"
                     android:hint="Add ToDo's" />
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="35dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/marked_star" />
+
             </LinearLayout>
             <LinearLayout
 

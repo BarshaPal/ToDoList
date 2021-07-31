@@ -35,8 +35,7 @@ public class ListDbHelper extends SQLiteOpenHelper {
                 + ListEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ListEntry.TODOS + " TEXT NOT NULL, "
                 + ListEntry.DATE + " TEXT, "
-                + ListEntry.TIME + " TEXT, "
-                + ListEntry.STAR + " TEXT);";
+                + ListEntry.TIME + " TEXT);";
 
         // Execute the SQL statement
         db.execSQL(SQL_CREATE_PETS_TABLE);
