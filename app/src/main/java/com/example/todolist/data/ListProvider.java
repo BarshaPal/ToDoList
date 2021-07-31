@@ -229,7 +229,8 @@ public class ListProvider extends ContentProvider {
             case LIST_ID:
                 selection = ListEntry._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
-                return db.delete(ListEntry.TABLE_NAME, selection, selectionArgs);
+                rows= db.delete(ListEntry.TABLE_NAME, selection, selectionArgs);
+                getContext().getContentResolver().notifyChange(uri, null);
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
 

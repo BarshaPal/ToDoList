@@ -1,11 +1,14 @@
 package com.example.todolist;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.LoaderManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +17,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +41,7 @@ import com.example.todolist.data.ListDbHelper;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Add_todo extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private  EditText list;
@@ -44,6 +49,12 @@ public class Add_todo extends AppCompatActivity implements LoaderManager.LoaderC
     private  EditText time_text;
     private ListDbHelper mDbHelper;
     private CheckBox setTimer;
+    private int myear;
+    private int mmonth;
+    private int mday;
+    private int mhour;
+    private int mmin;
+
     private Uri List_Uri;
     private static final int BOOK_LOADER = 1;
 
@@ -58,6 +69,9 @@ public class Add_todo extends AppCompatActivity implements LoaderManager.LoaderC
         ImageView star=(ImageView)findViewById(R.id.star);
         LinearLayout showtime=(LinearLayout)findViewById(R.id.showtimer);
         showtime.setVisibility(View.INVISIBLE);
+        list= (EditText) findViewById(R.id.editTextList);
+        date_text= (EditText) findViewById(R.id.date);
+        time_text= (EditText) findViewById(R.id.time);
      Button addlist=(Button)findViewById(R.id.addtodo_butt);
         Intent intent = getIntent();
         mDbHelper=new ListDbHelper(this);
@@ -76,6 +90,9 @@ public class Add_todo extends AppCompatActivity implements LoaderManager.LoaderC
      addlist.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
+
+             startAlarm(myCalendar);
+             Toast.makeText(getApplicationContext(),"t"+myCalendar.get(Calendar.HOUR_OF_DAY)+myCalendar.get(Calendar.MINUTE)+myCalendar.get(Calendar.YEAR),Toast.LENGTH_LONG).show();
              insert();
              finish();
          }
@@ -94,19 +111,21 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         }
     }
 });
-         list= (EditText) findViewById(R.id.editTextList);
-         date_text= (EditText) findViewById(R.id.date);
-         time_text= (EditText) findViewById(R.id.time);
+
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
                 // TODO Auto-generated method stub
+                myear=year;
+                mmonth=monthOfYear;
+                mday=dayOfMonth;
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateLabel();
+
             }
             private void updateLabel() {
                 String myFormat = "MM/dd/yy"; //In which you need put here
@@ -126,28 +145,43 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+        TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                mhour=hourOfDay;
+                mmin=minute;
+                myCalendar.set(Calendar.HOUR_OF_DAY, mhour);
+                myCalendar.set(Calendar.MINUTE, mmin);
+                updatetime();
+            }
+            private void updatetime() {
+                time_text.setText( mhour + ":" + mmin);
+            }
 
+        };
         time_text.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
 
-                int hour = myCalendar.get(Calendar.HOUR_OF_DAY);
-                int minute = myCalendar.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(Add_todo.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        time_text.setText( selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
+                  new TimePickerDialog(Add_todo.this, time,myCalendar
+                          .get(Calendar.HOUR_OF_DAY),myCalendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(Add_todo.this)).show();
 
             }
         });
 
+    }
+
+
+    private void startAlarm(Calendar c) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, NotificationPublisher.class);
+        final int id = (int) System.currentTimeMillis();
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
+
+        Objects.requireNonNull(alarmManager).setExact(AlarmManager.RTC_WAKEUP,
+                c.getTimeInMillis(), pendingIntent);
     }
 
     private void insert() {
@@ -221,16 +255,19 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
     }
     private void showDeleteConfirmationDialog() {
         // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the postivie and negative buttons on the dialog.
+        // for the positive and negative buttons on the dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Delete");
+
+        builder.setMessage("Delete Todo");
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Delete" button, so delete the pet.
-                delete();
+                deletePet();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Cancel" button, so dismiss the dialog
                 // and continue editing the pet.
@@ -244,14 +281,31 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    private void delete() {
+
+    /**
+     * Perform the deletion of the pet in the database.
+     */
+    private void deletePet() {
+        // Only perform the delete if this is an existing pet.
         if (List_Uri != null) {
-            getContentResolver().delete(List_Uri, null, null);
+            // Call the ContentResolver to delete the pet at the given content URI.
+            // Pass in null for the selection and selection args because the mCurrentPetUri
+            // content URI already identifies the pet that we want.
+            int rowsDeleted = getContentResolver().delete(List_Uri, null, null);
+
+            // Show a toast message depending on whether or not the delete was successful.
+            if (rowsDeleted == 0) {
+                // If no rows were deleted, then there was an error with the delete.
+                Toast.makeText(this, "delete failed", Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the delete was successful and we can display a toast.
+                Toast.makeText(this, "delete successful", Toast.LENGTH_SHORT).show();
+            }
+
+            // Close the activity
+            finish();
         }
-        finish();
-
     }
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

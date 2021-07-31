@@ -22,6 +22,8 @@
             android:name=".data.ListProvider"
             android:authorities="com.example.todolist"
             android:exported="false" />
+        <receiver android:name=".NotificationPublisher"></receiver>
+
     </application>
 
 </manifest>
