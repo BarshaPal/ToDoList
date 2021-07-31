@@ -18,18 +18,19 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/editTextList"
                 android:layout_width="wrap_content"
                 android:layout_height="78dp"
                 android:layout_weight="1"
                 android:inputType="textPersonName"
                 android:hint="Add ToDo's" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/star"
                 android:layout_width="35dp"
                 android:layout_height="45dp"
                 android:layout_margin="10dp"
+                android:background="@color/white"
                 android:src="@drawable/marked_star" />
         </LinearLayout>
 
@@ -109,6 +110,7 @@
    </LinearLayout>
     </LinearLayout>
     <Button
+        android:id="@+id/addtodo_butt"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="ADD TASK"

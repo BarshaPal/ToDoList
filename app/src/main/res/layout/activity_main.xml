@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#E8E7E7">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/list_view"/>
-
+<ListView
+    android:id="@+id/list_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:divider="@null"
+    android:dividerHeight="0dp"
+/>
     <ImageView
         android:id="@+id/emptycart"
         android:layout_width="229dp"
@@ -20,7 +23,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_add"
-        android:src="@drawable/add"
+        android:src="@drawable/add_butt"
         app:maxImageSize="40dp"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
