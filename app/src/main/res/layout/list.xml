@@ -35,7 +35,14 @@
                     android:textSize="20sp"
                     android:inputType="textPersonName"
                     android:hint="Add ToDo's" />
-
+                <Button
+                    android:id="@+id/sell_butn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:focusable="false"
+                    android:layout_marginLeft="130dp"
+                    android:layout_marginBottom="0dp"
+                    android:text="Delete" />
 
             </LinearLayout>
             <LinearLayout

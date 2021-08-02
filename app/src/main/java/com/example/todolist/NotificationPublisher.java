@@ -16,6 +16,7 @@ public class NotificationPublisher   extends BroadcastReceiver {
         Notification notification = nb.build();
         notification.defaults |= Notification.DEFAULT_VIBRATE;
         notification.defaults |= Notification.DEFAULT_SOUND;
+
     }
 
 }

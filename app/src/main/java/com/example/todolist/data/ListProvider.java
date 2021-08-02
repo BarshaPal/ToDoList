@@ -1,8 +1,12 @@
 package com.example.todolist.data;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.todolist.NotificationPublisher;
 import com.example.todolist.data.ListContract.ListEntry;
 
 /**
@@ -229,8 +234,7 @@ public class ListProvider extends ContentProvider {
             case LIST_ID:
                 selection = ListEntry._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
-                rows= db.delete(ListEntry.TABLE_NAME, selection, selectionArgs);
-                getContext().getContentResolver().notifyChange(uri, null);
+                return db.delete(ListEntry.TABLE_NAME, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
 

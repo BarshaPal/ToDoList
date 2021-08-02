@@ -16,7 +16,7 @@ public class ListDbHelper extends SQLiteOpenHelper {
     /**
      * Name of the database file
      */
-    private static final String DATABASE_NAME = "todolist4.db";
+    private static final String DATABASE_NAME = "todolist5.db";
 
     /**
      * Database version. If you change the database schema, you must increment the database version.
@@ -35,6 +35,7 @@ public class ListDbHelper extends SQLiteOpenHelper {
                 + ListEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ListEntry.TODOS + " TEXT NOT NULL, "
                 + ListEntry.DATE + " TEXT, "
+                + ListEntry.ALARM + " TEXT, "
                 + ListEntry.TIME + " TEXT);";
 
         // Execute the SQL statement

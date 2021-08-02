@@ -15,7 +15,7 @@ public final class ListContract {
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    public static final String PATH_LIST = "list4";
+    public static final String PATH_LIST = "list5";
 
 
     public static final class ListEntry implements BaseColumns {
@@ -29,7 +29,7 @@ public final class ListContract {
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_LIST;
 
-        public static final String TABLE_NAME = "list4";
+        public static final String TABLE_NAME = "list5";
 
         public static final String _ID = BaseColumns._ID;
 
@@ -41,7 +41,7 @@ public final class ListContract {
 
         public static final String TIME = "time";
 
-        public static final String STAR = "star";
+        public static final String ALARM = "alarm";
     }
 
 }

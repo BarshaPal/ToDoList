@@ -1,7 +1,16 @@
 package com.example.todolist;
 
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,12 +44,33 @@ public class ListCursorAdapter extends CursorAdapter {
             String TodoList = cursor.getString(cursor.getColumnIndex(ListContract.ListEntry.TODOS));
             String currtime = cursor.getString(cursor.getColumnIndex(ListContract.ListEntry.TIME));
             String currDate = cursor.getString(cursor.getColumnIndex(ListContract.ListEntry.DATE));
+            Button saleButton = (Button) view.findViewById(R.id.sell_butn);
+            saleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ContentResolver resolver = context.getContentResolver();
+                    ContentValues values = new ContentValues();
+                    Uri CurrentUri = ContentUris.withAppendedId(ListContract.ListEntry.CONTENT_URI, id);
+
+                        resolver.delete(
+                                CurrentUri,
+                                null,
+                                null
+                        );
+
+                    resolver.notifyChange(CurrentUri,null);
+                }
+
+            });
+
 
             Todos.setText(TodoList);
             Date.setText(currDate);
             Time.setText(currtime);
 
         }
+
+
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {

@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -54,6 +55,7 @@ public class Add_todo extends AppCompatActivity implements LoaderManager.LoaderC
     private int mday;
     private int mhour;
     private int mmin;
+    private boolean mListChange = false;
 
     private Uri List_Uri;
     private static final int BOOK_LOADER = 1;
@@ -69,9 +71,13 @@ public class Add_todo extends AppCompatActivity implements LoaderManager.LoaderC
         ImageView star=(ImageView)findViewById(R.id.star);
         LinearLayout showtime=(LinearLayout)findViewById(R.id.showtimer);
         showtime.setVisibility(View.INVISIBLE);
+
         list= (EditText) findViewById(R.id.editTextList);
         date_text= (EditText) findViewById(R.id.date);
         time_text= (EditText) findViewById(R.id.time);
+        list.setOnTouchListener(mTouchListener);
+        date_text.setOnTouchListener(mTouchListener);
+        time_text.setOnTouchListener(mTouchListener);
      Button addlist=(Button)findViewById(R.id.addtodo_butt);
         Intent intent = getIntent();
         mDbHelper=new ListDbHelper(this);
@@ -97,6 +103,7 @@ public class Add_todo extends AppCompatActivity implements LoaderManager.LoaderC
              finish();
          }
      });
+
 setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -172,14 +179,24 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         });
 
     }
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            mListChange = true;
+            return false;
+        }
+    };
 
 
     private void startAlarm(Calendar c) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationPublisher.class);
-        final int id = (int) System.currentTimeMillis();
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
 
+        final int id = (int) System.currentTimeMillis();
+        ContentValues values = new ContentValues();
+        String id_string=String.valueOf(id);
+        values.put(ListContract.ListEntry.ALARM, id_string);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Objects.requireNonNull(alarmManager).setExact(AlarmManager.RTC_WAKEUP,
                 c.getTimeInMillis(), pendingIntent);
     }
@@ -224,7 +241,18 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
 
 
     }
-
+    @Override
+    public void onBackPressed() {
+        // If the pet hasn't changed, continue with handling back button press
+        if (!mListChange) {
+            super.onBackPressed();
+            return;
+        }
+        else
+        {
+            showUnsavedChangesDialog();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -249,13 +277,46 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             case R.id.delete:
                 showDeleteConfirmationDialog();
                 return true;
+            case android.R.id.home:
+                if (!mListChange) {
+                    finish();
+                    return true;
+                }
+                else
+                {
+                    showUnsavedChangesDialog();
+                    return true;
+                }
 
         }
+
         return super.onOptionsItemSelected(item);
     }
+    private void showUnsavedChangesDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Save Changes");
+        builder.setPositiveButton("Keep Editing", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the pet.
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Discard", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the pet.
+                finish();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
     private void showDeleteConfirmationDialog() {
-        // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the positive and negative buttons on the dialog.
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setMessage("Delete Todo");
@@ -282,9 +343,15 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         alertDialog.show();
     }
 
-    /**
-     * Perform the deletion of the pet in the database.
-     */
+    private void cancelAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, NotificationPublisher.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, Integer.parseInt(ListContract.ListEntry.ALARM), intent, 0);
+        alarmManager.cancel(pendingIntent);
+
+    }
+
     private void deletePet() {
         // Only perform the delete if this is an existing pet.
         if (List_Uri != null) {
@@ -296,10 +363,10 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             // Show a toast message depending on whether or not the delete was successful.
             if (rowsDeleted == 0) {
                 // If no rows were deleted, then there was an error with the delete.
-                Toast.makeText(this, "delete failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "geteditor_delete_pet_failedString", Toast.LENGTH_SHORT).show();
             } else {
                 // Otherwise, the delete was successful and we can display a toast.
-                Toast.makeText(this, "delete successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
             }
 
             // Close the activity
@@ -336,7 +403,7 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             date_text.setText(date);
             time_text.setText(time);
             if (date == null || date.length() == 0 || time == null || time.length() == 0) {
-                setTimer.setEnabled(false);
+                setTimer.setChecked(false);
 
             } else {
                 setTimer.setChecked(true);
