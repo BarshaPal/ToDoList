@@ -246,9 +246,8 @@ public class ListProvider extends ContentProvider {
         // Return the number of rows updated
         return rows;
     }
-    /**
-     * Returns the MIME type of data for the content URI.
-     */
+
+     //
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {

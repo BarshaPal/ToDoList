@@ -39,7 +39,6 @@ public class ListCursorAdapter extends CursorAdapter {
             TextView Todos = view.findViewById(R.id.Listview);
             TextView Date = view.findViewById(R.id.show_date);
             TextView Time = view.findViewById(R.id.show_time);
-            ImageButton star = (ImageButton) view.findViewById(R.id.star);
 
             String TodoList = cursor.getString(cursor.getColumnIndex(ListContract.ListEntry.TODOS));
             String currtime = cursor.getString(cursor.getColumnIndex(ListContract.ListEntry.TIME));
@@ -58,7 +57,7 @@ public class ListCursorAdapter extends CursorAdapter {
                                 null
                         );
 
-                    resolver.notifyChange(CurrentUri,null);
+                   resolver.notifyChange(CurrentUri,null);
                 }
 
             });

@@ -325,6 +325,7 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Delete" button, so delete the pet.
                 deletePet();
+
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -347,13 +348,12 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationPublisher.class);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, Integer.parseInt(ListContract.ListEntry.ALARM), intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, Integer.parseInt(ListContract.ListEntry.ALARM), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
 
     }
 
     private void deletePet() {
-        // Only perform the delete if this is an existing pet.
         if (List_Uri != null) {
             // Call the ContentResolver to delete the pet at the given content URI.
             // Pass in null for the selection and selection args because the mCurrentPetUri
@@ -363,16 +363,17 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             // Show a toast message depending on whether or not the delete was successful.
             if (rowsDeleted == 0) {
                 // If no rows were deleted, then there was an error with the delete.
-                Toast.makeText(this, "geteditor_delete_pet_failedString", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "editor_delete_pet_failed", Toast.LENGTH_SHORT).show();
             } else {
                 // Otherwise, the delete was successful and we can display a toast.
-                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "editor_delete_pet_successful", Toast.LENGTH_SHORT).show();
             }
-
+           getContentResolver().notifyChange(List_Uri,null);
             // Close the activity
             finish();
         }
     }
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
