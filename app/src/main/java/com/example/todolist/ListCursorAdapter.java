@@ -49,8 +49,8 @@ public class ListCursorAdapter extends CursorAdapter {
                 public void onClick(View v) {
                     ContentResolver resolver = context.getContentResolver();
                     ContentValues values = new ContentValues();
+                    Log.d("list","h"+id);
                     Uri CurrentUri = ContentUris.withAppendedId(ListContract.ListEntry.CONTENT_URI, id);
-
                         resolver.delete(
                                 CurrentUri,
                                 null,
