@@ -78,6 +78,7 @@ public class Add_todo extends AppCompatActivity implements LoaderManager.LoaderC
         list.setOnTouchListener(mTouchListener);
         date_text.setOnTouchListener(mTouchListener);
         time_text.setOnTouchListener(mTouchListener);
+
      Button addlist=(Button)findViewById(R.id.addtodo_butt);
         Intent intent = getIntent();
         mDbHelper=new ListDbHelper(this);
@@ -209,6 +210,10 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             Date="Today";
         }
+        if (Time == null || Time.length() == 0)
+        {
+            Time="null";
+        }
 
         ContentValues values = new ContentValues();
         values.put(ListContract.ListEntry.TODOS, List);
@@ -323,10 +328,9 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Delete" button, so delete the pet.
                 deletePet();
 
-            }
+                }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -339,37 +343,22 @@ setTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             }
         });
 
-        // Create and show the AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
 
-    private void cancelAlarm() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, NotificationPublisher.class);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, Integer.parseInt(ListContract.ListEntry.ALARM), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.cancel(pendingIntent);
-
-    }
 
     private void deletePet() {
         if (List_Uri != null) {
-            // Call the ContentResolver to delete the pet at the given content URI.
-            // Pass in null for the selection and selection args because the mCurrentPetUri
-            // content URI already identifies the pet that we want.
+
             int rowsDeleted = getContentResolver().delete(List_Uri, null, null);
 
-            // Show a toast message depending on whether or not the delete was successful.
             if (rowsDeleted == 0) {
-                // If no rows were deleted, then there was an error with the delete.
                 Toast.makeText(this, "editor_delete_pet_failed", Toast.LENGTH_SHORT).show();
             } else {
-                // Otherwise, the delete was successful and we can display a toast.
                 Toast.makeText(this, "editor_delete_pet_successful", Toast.LENGTH_SHORT).show();
             }
            getContentResolver().notifyChange(List_Uri,null);
-            // Close the activity
             finish();
         }
     }

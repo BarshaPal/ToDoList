@@ -14,12 +14,35 @@
     android:divider="@null"
     android:dividerHeight="0dp"
 />
-    <ImageView
-        android:id="@+id/emptycart"
-        android:layout_width="229dp"
-        android:layout_height="249dp"
+    <LinearLayout
+        android:id="@+id/emptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        />
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Task"
+        android:textSize="30dp">
+    </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You can create new Task"
+            android:textSize="15dp"
+            ></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="By clicking on the + Button"
+            android:textSize="15dp"
+            ></TextView>
+
+
+    </LinearLayout>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_add"

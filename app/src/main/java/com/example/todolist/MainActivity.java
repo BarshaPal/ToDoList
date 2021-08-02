@@ -52,6 +52,8 @@ private ListCursorAdapter mcursorAdapter;
         });
 
         ListView displayView = (ListView) findViewById(R.id.list_view);
+        View emptyView = findViewById(R.id.emptyView);
+        displayView.setEmptyView(emptyView);
         mcursorAdapter = new ListCursorAdapter(this, null);
         displayView.setAdapter(mcursorAdapter);
 
@@ -73,9 +75,6 @@ private ListCursorAdapter mcursorAdapter;
     }
 
 
-    /**
-     * Helper method to insert hardcoded pet data into the database. For debugging purposes only.
-     */
 
 
     @Override
@@ -111,8 +110,8 @@ private ListCursorAdapter mcursorAdapter;
 
 
         Uri newUri = getContentResolver().insert(
-                ListContract.ListEntry.CONTENT_URI,   // the pet content URI
-                values                  // the values to insert
+                ListContract.ListEntry.CONTENT_URI,
+                values
         );
 
     }

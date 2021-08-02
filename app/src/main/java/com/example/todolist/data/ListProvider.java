@@ -41,11 +41,7 @@ public class ListProvider extends ContentProvider {
      */
     private static final int LIST_ID = 101;
 
-    /**
-     * UriMatcher object to match a content URI to a corresponding code.
-     * The input passed into the constructor represents the code to return for the root URI.
-     * It's common to use NO_MATCH as the input for this case.
-     */
+
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     // Static initializer. This is run the first time anything is called from this class.
@@ -122,9 +118,7 @@ public class ListProvider extends ContentProvider {
         return cursor;
     }
 
-    /**
-     * Insert new data into the provider with the given ContentValues.
-     */
+
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
@@ -137,10 +131,6 @@ public class ListProvider extends ContentProvider {
         }
     }
 
-    /**
-     * Insert a pet into the database with the given content values. Return the new content URI
-     * for that specific row in the database.
-     */
     private Uri insertPet(Uri uri, ContentValues values) {
         String todos = values.getAsString(ListEntry.TODOS);
 
@@ -168,15 +158,7 @@ public class ListProvider extends ContentProvider {
         return ContentUris.withAppendedId(uri, id);
     }
 
-    /**
-     * Updates the data at the given selection and selection arguments, with the new ContentValues.
-     */
 
-    /**
-     * Update pets in the database with the given content values. Apply the changes to the rows
-     * specified in the selection and selection arguments (which could be 0 or 1 or more pets).
-     * Return the number of rows that were successfully updated.
-     */
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
 
