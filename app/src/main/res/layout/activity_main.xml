@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="#E8E7E7">
+    android:background="#2B2A2A"
+    >
 
 <ListView
     android:id="@+id/list_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:divider="@null"
+
     android:dividerHeight="0dp"
 />
     <LinearLayout
@@ -25,17 +27,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No Task"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         android:textSize="30dp">
     </TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="You can create new Task"
+            android:textColor="@color/white"
             android:textSize="15dp"
             ></TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:text="By clicking on the + Button"
             android:textSize="15dp"
             ></TextView>

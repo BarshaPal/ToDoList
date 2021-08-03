@@ -41,7 +41,7 @@ private ListCursorAdapter mcursorAdapter;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FloatingActionButton floatingActionButton=(FloatingActionButton)findViewById(R.id.floating_add);
-        star=(ImageButton) findViewById(R.id.star);
+
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,9 +104,9 @@ private ListCursorAdapter mcursorAdapter;
 
     private void insertList() {
         ContentValues values = new ContentValues();
-        values.put(ListContract.ListEntry.TODOS, "Toto");
-        values.put(ListContract.ListEntry.DATE, "Terrier");
-        values.put(ListContract.ListEntry.TIME, "89");
+        values.put(ListContract.ListEntry.TODOS, "Whats up");
+        values.put(ListContract.ListEntry.DATE, "22/3/2021");
+        values.put(ListContract.ListEntry.TIME, "12:40");
 
 
         Uri newUri = getContentResolver().insert(

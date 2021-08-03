@@ -29,6 +29,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -46,8 +47,8 @@ import java.util.Objects;
 
 public class Add_todo extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private  EditText list;
-    private  EditText date_text;
-    private  EditText time_text;
+    private  TextView date_text;
+    private  TextView time_text;
     private ListDbHelper mDbHelper;
     private CheckBox setTimer;
     private int myear;
@@ -68,13 +69,13 @@ public class Add_todo extends AppCompatActivity implements LoaderManager.LoaderC
 
         final Calendar myCalendar = Calendar.getInstance();
          setTimer=(CheckBox) findViewById(R.id.setTimer);
-        ImageView star=(ImageView)findViewById(R.id.star);
+
         LinearLayout showtime=(LinearLayout)findViewById(R.id.showtimer);
         showtime.setVisibility(View.INVISIBLE);
 
         list= (EditText) findViewById(R.id.editTextList);
-        date_text= (EditText) findViewById(R.id.date);
-        time_text= (EditText) findViewById(R.id.time);
+        date_text= (TextView) findViewById(R.id.date);
+        time_text= (TextView) findViewById(R.id.time);
         list.setOnTouchListener(mTouchListener);
         date_text.setOnTouchListener(mTouchListener);
         time_text.setOnTouchListener(mTouchListener);

@@ -16,22 +16,21 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textColor="#45589E"/>
             <EditText
                 android:id="@+id/editTextList"
-                android:layout_width="wrap_content"
-                android:layout_height="78dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
                 android:layout_weight="1"
+                android:textColor="@color/black"
                 android:inputType="textPersonName"
                 android:hint="Add ToDo's" />
 
-            <ImageButton
-                android:id="@+id/star"
-                android:layout_width="35dp"
-                android:layout_height="45dp"
-                android:layout_margin="10dp"
-                android:background="@color/white"
-                android:src="@drawable/marked_star" />
         </LinearLayout>
 
         <LinearLayout
@@ -66,8 +65,7 @@
        android:id="@+id/showtimer"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       >
+       android:orientation="horizontal">
        <LinearLayout
            android:layout_width="0dp"
            android:layout_weight="1"
@@ -78,13 +76,25 @@
                android:layout_width="30dp"
                android:layout_height="30dp"
                android:src="@drawable/calender" />
-           <EditText
-               android:id="@+id/date"
-               android:layout_width="match_parent"
-               android:padding="7dp"
-               android:hint="Add Date"
+           <LinearLayout
+               android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               />
+               android:orientation="vertical">
+               <TextView
+                   android:id="@+id/date"
+                   android:layout_width="match_parent"
+                   android:padding="7dp"
+                   android:textSize="17dp"
+                   android:hint="Add Date"
+                   android:layout_height="wrap_content"
+                   />
+               <View
+                   android:layout_width="100dp"
+                   android:layout_height="1dp"
+                   android:background="#45589E"
+                   />
+           </LinearLayout>
+
        </LinearLayout>
 
 
@@ -95,23 +105,37 @@
            android:layout_height="wrap_content"
            android:orientation="horizontal">
 
+
            <ImageView
                android:layout_width="30dp"
                android:layout_height="30dp"
                android:src="@drawable/timer_icon" />
-
-           <EditText
-               android:id="@+id/time"
-               android:layout_width="match_parent"
+           <LinearLayout
+               android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:padding="7dp"
-               android:hint="Add Time" />
+               android:orientation="vertical">
+               <TextView
+                   android:id="@+id/time"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:padding="7dp"
+                   android:hint="Add Time"
+                   android:textSize="17dp"/>
+               <View
+                   android:layout_width="100dp"
+                   android:layout_height="1dp"
+                   android:background="#45589E"
+                   />
+           </LinearLayout>
+
+
        </LinearLayout>
    </LinearLayout>
     </LinearLayout>
     <Button
         android:id="@+id/addtodo_butt"
         android:layout_width="match_parent"
+        android:background="#45589E"
         android:layout_height="60dp"
         android:text="ADD TASK"
         android:layout_alignParentBottom="true"/>
