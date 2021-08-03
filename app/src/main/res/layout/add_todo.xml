@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Title"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="monospace"
                 android:textColor="#3356DD"/>
             <EditText
                 android:id="@+id/editTextList"
@@ -53,9 +53,10 @@
                android:layout_weight="1"
                android:layout_width="0dp"
                android:text="Set Reminder"
+                android:fontFamily="monospace"
                android:padding="7dp"
                 android:textColor="@color/white"
-               android:textSize="20dp"
+               android:textSize="18dp"
                android:layout_height="wrap_content"/>
             <CheckBox
                 android:id="@+id/setTimer"
@@ -89,7 +90,7 @@
                    android:textSize="17dp"
                    android:textColor="@color/white"
                    android:hint="Add Date"
-                   android:fontFamily="sans-serif-medium"
+                   android:fontFamily="monospace"
                    android:layout_height="wrap_content"
                    />
                <View
@@ -122,7 +123,7 @@
                    android:layout_height="wrap_content"
                    android:padding="7dp"
                    android:hint="Add Time"
-                   android:fontFamily="sans-serif-medium"
+                   android:fontFamily="monospace"
                    android:textColorHint="#B6B0B0"
                    android:textSize="17dp"/>
                <View
