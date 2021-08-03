@@ -22,13 +22,17 @@
             <LinearLayout
 
                 android:layout_width="match_parent"
+                android:focusableInTouchMode="false"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/Listview"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:inputType="textMultiLine"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:layout_weight="1"
                     android:fontFamily="monospace"
                     app:autoSizeTextType="uniform"
@@ -36,24 +40,22 @@
                     android:autoSizeMaxTextSize="100sp"
                     android:autoSizeStepGranularity="20dp"
                     android:hint="Add ToDo's"
-                    android:inputType="textPersonName"
                     android:padding="5dp"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
-                <ImageButton
+
+                <Button
                     android:id="@+id/sell_butn"
+                    android:background="@drawable/delete"
                     android:layout_width="36dp"
+                    android:focusable="false"
                     android:layout_height="36dp"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/delete" />
-
-
+                    android:scaleType="fitXY"/>
 
             </LinearLayout>
             <LinearLayout
 
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:paddingLeft="5dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

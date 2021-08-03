@@ -43,7 +43,7 @@ public class ListCursorAdapter extends CursorAdapter {
             String TodoList = cursor.getString(cursor.getColumnIndex(ListContract.ListEntry.TODOS));
             String currtime = cursor.getString(cursor.getColumnIndex(ListContract.ListEntry.TIME));
             String currDate = cursor.getString(cursor.getColumnIndex(ListContract.ListEntry.DATE));
-            ImageButton saleButton = (ImageButton) view.findViewById(R.id.sell_butn);
+            Button saleButton = (Button) view.findViewById(R.id.sell_butn);
             saleButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
